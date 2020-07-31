@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ title }} - Page</title>
+</head>
+<strong><nav>
+<ul class="menu">
+<a href="{{ url_for('home') }}">Home</a>
+<a href="{{ url_for('register') }}">Register</a>
+{% if current_user.is_authenticated == True %}
+	<a href="{{ url_for('logout') }}">Logout</a>
+	<a href="{{ url_for('account') }}">Account</a>
+{% else %}
+	<a href="{{ url_for('login') }}">Login</a>
+	{% endif %}	
+</ul>
+</nav></strong>
+<body>
+<h1>{{  title  }} Page</h1>
+{% block body_content %}{% endblock %}
+</body>
+</html>
