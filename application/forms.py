@@ -5,6 +5,12 @@ from application.models import Users, Orders, Stock
 from flask_login import current_user
 
 
+#class OrdersForm(FlaskForm):
+
+
+#class StockForm(FlaskForm):
+
+
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name',
     validators=[

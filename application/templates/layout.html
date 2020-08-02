@@ -12,7 +12,7 @@
 	<a href="{{ url_for('account') }}">Account</a>
 	<a href="{{ url_for('order') }}">Orders</a>
 	<a href="{{ irl_for('stock') }}">Stock List</a>
-{% else %}
+	{% else %}
 	<a href="{{ url_for('login') }}">Login</a>
 	{% endif %}	
 </ul>
