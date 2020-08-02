@@ -1,1 +1,9 @@
-<h1>{{ title }}</h1>
+{% extends "layout.html" %}
+{% block body_content %}
+{% for post in post %}
+        <div>
+            <h3>{{ title }}</h3>
+	    <h2> Please use the nav bar to login or register to use this service, if you are a new employee you must have a passcode to register from you manager.<h2>
+        </div>
+	{% endfor %}	
+{% endblock %}
