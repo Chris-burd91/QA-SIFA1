@@ -1,15 +1,75 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, DateTimeField, DateField, TextAreaField, IntegerField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
 from application.models import Users, Orders, Stock
 from flask_login import current_user
 
 
-#class OrdersForm(FlaskForm):
+class OrdersForm(FlaskForm):
+    order_date = DateTimeField('Order Date:',
+    validators=[
+            DataRequired()
+            ]
+    )
 
+    ship_date = DateField('Shipping Date:',
+    validators=[
+           ]
+    )
 
-#class StockForm(FlaskForm):
+    status = StringField('Order Status:',
+    validators=[
+            Length(min=2, max=50)
+            ]
+    )
 
+    customer_name = StringField('Customer Name:',
+    validators=[
+            DataRequired(),
+            Length(min=2, max=60)
+            ]
+    )
+
+    customer_address = TextAreaField('Customer Address:',
+    validators=[
+            DataRequired(),
+            Length(max=500)
+            ]
+    )
+
+    price = IntegerField('Order Amount:',
+    validators=[
+            DataRequired(),
+            NumberRange(max=10000)
+            ]
+    )
+
+class StockForm(FlaskForm):
+    product_name = StringField('Product Name:',
+    validators=[
+            DataRequired(),
+            Length(min=2, max=30)
+            ]
+    )
+
+    product_Discription = TextAreaField('Product Discription:',
+    validators=[
+            Length(max=500)
+            ]
+    )
+
+    quantity = IntegerField('Quantity in Stock:',
+    validators=[
+            DataRequired(),
+           NumberRange(min=-15, max=10000)
+            ]
+    )
+
+    bought_price = IntegerField('Price bought for:',
+   validators=[
+            DataRequired()
+            ]
+    )
 
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name',
@@ -44,6 +104,7 @@ class RegistrationForm(FlaskForm):
             EqualTo('password')
         ]
     )
+            
     submit = SubmitField('Sign Up')
 
     def validate_email(self, email):
