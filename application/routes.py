@@ -53,19 +53,19 @@ def register():
         return redirect(url_for('order'))
      return render_template('register.html', title ='Register', form=form)
 
-@app.route('/order')
-@login_required
-def order():
-    form = OrderForm
+#@app.route('/order')
+#@login_required
+#def order():
+#    form = OrderForm
+   
+#    return render_template('order.html', title ='Orders', form=form)
 
-    return render_template('order.html', title ='Orders', form=form)
+#@app.route('/stock')
+#@login_required
+#def stock():
+#    form = StockForm()
 
-@app.route('/stock')
-@login_required
-def stock():
-    form = StockForm()
-
-    return render_template('stock.html', title ='Stock List', form=form)
+#    return render_template('stock.html', title ='Stock List', form=form)
 
 @app.route('/account', methods=['GET','POST'])
 @login_required

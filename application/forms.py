@@ -54,7 +54,7 @@ class StockForm(FlaskForm):
 
     product_Discription = TextAreaField('Product Discription:',
     validators=[
-            Length(max=500)
+            Length(min=10, max=500)
             ]
     )
 

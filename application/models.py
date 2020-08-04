@@ -16,20 +16,29 @@ class Users(db.Model, UserMixin):
            'User ID: ', str(self.id), '\r\n',
            'Email: ', self.email, '\r\n',
            'Name: ', self.first_name, ' ', self.last_name
+
        ])
+
 @login_manager.user_loader
 def load_user(id):
     return Users.query.get(int(id))
 
+
+Order_Stock= db.Table( id = db.Column(db.Integer, primary_key=True),
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id')),
+    stock_id = db.Column(db.Integer, db.ForeignKey('stock.id')))
+
+
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    shipped_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    shipped_date = db.Column(db.DateTime, default=datetime.utcnow)
     order_status = db.Column(db.String(40))
     customer_name = db.Column(db.String(50))
     customer_address = db.Column(db.String(140))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    stock_id = db.relationship('Order_Stock', backref='Stock', lazy=True)
+
     def __repr__(self):
         return ''.join([
             'User ID: ', str(self.user_id), '\r\n'
@@ -40,9 +49,6 @@ class Orders(db.Model):
             'Order Status: ', self.order_status, '\r\n'
         ])
 
-@login_manager.user_loader
-def load_user(id):
-    return Users.query.get(int(id))
 
 class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +58,7 @@ class Stock(db.Model):
     price = db.Column(db.Float(10), nullable=False)
     sell_price = db.Column(db.Float(10), nullable=False)
     serial_no = db.Column(db.Integer, unique=True, nullable=False)
+    order_id = db.relationship('Order_Stock', backref='Order', lazy=True)
 
     def __repr__(self):
         return ''.join([
@@ -63,9 +70,5 @@ class Stock(db.Model):
         ])
             
 
-class Order_Stock(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
-    stock_id = db.Column(db.Integer, db.ForeignKey('stock.id'), nullable=False)
 
 
