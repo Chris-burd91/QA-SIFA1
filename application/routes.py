@@ -31,13 +31,14 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-1
+
 @app.route('/register', methods=['GET','POST'])
 def register():
-     form = RegistrationForm()
      if current_user.is_authenticated:
-         return redirect(url_for('home'))
+        return redirect(url_for('home'))
+     form = RegistrationForm()
      if form.validate_on_submit():
+
         hash_pw = bcrypt.generate_password_hash(form.password.data)
 
         user = Users(
@@ -50,22 +51,22 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('order'))
+        return redirect(url_for('home'))
      return render_template('register.html', title ='Register', form=form)
 
-#@app.route('/order')
-#@login_required
-#def order():
-#    form = OrderForm
-   
-#    return render_template('order.html', title ='Orders', form=form)
+@app.route('/order')
+@login_required
+def order():
+   form = OrderForm
+  
+   return render_template('order.html', title ='Orders', form=form)
 
-#@app.route('/stock')
-#@login_required
-#def stock():
-#    form = StockForm()
+@app.route('/stock')
+@login_required
+def stock():
+    form = StockForm()
 
-#    return render_template('stock.html', title ='Stock List', form=form)
+    return render_template('stock.html', title ='Stock List', form=form)
 
 @app.route('/account', methods=['GET','POST'])
 @login_required

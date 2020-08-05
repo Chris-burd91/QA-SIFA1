@@ -6,16 +6,6 @@ from flask_login import current_user
 
 
 class OrdersForm(FlaskForm):
-    order_date = DateTimeField('Order Date:',
-    validators=[
-            DataRequired()
-            ]
-    )
-
-    ship_date = DateField('Shipping Date:',
-    validators=[
-           ]
-    )
 
     status = StringField('Order Status:',
     validators=[
@@ -62,8 +52,8 @@ class StockForm(FlaskForm):
     validators=[
             DataRequired(),
            NumberRange(min=-15, max=10000)
-            ]
-    )
+           ]
+   )
 
     bought_price = IntegerField('Price bought for:',
    validators=[
@@ -107,9 +97,9 @@ class RegistrationForm(FlaskForm):
             
     submit = SubmitField('Sign Up')
 
-    def validate_email(self, email):
+    def validate_email(self,email):
         user = Users.query.filter_by(email=email.data).first()
-
+      
         if user:
             raise ValidationError('Email already in use')
 
