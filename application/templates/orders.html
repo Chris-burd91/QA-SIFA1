@@ -1,4 +1,16 @@
 {% extends "layout.html" %}
 {% block body_content %}
+{% if orders %}
+	{% for orders in orders %}
+        	<div>
+           	 <h3>{{ orders.order_id }}</h3>
+	    	<span>Customer Details: <i>{{ orders.customer_name }} {{ orders.custimer_address }}</i></span>
+	    	<span>Order time and status: <i>{{ orders.date_order }}{{ orders.order_status }}</i></span>
+	    	<h3>{{ orders.user_id }}</h3>
+        	</div>
+	{% endfor %}
+{% else %}
+	<p>There are no orders<p>
+{% endif %}
 {% endblock %}
 ~                  

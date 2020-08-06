@@ -1,4 +1,15 @@
 {% extends "layout.html" %}
 {% block body_content %}
+{% if stock %}
+        {% for stock in stock %}
+                <div>
+                 <h3>{{ stock.stock_id }}</h3>
+                <span>Product Info: <i>{{ stock.product_name }} {{ stock.product_discription }}</i></span>
+		<span>Bought and Sold Price: <i>{{ stock.price }}{{ stock.sell_price }}</i></span>
+                <h3>{{ stock.quantity }}</h3>
+                </div>
+        {% endfor %}
+{% else %}
+        <p>There is no Stock<p>
+{% endif %}
 {% endblock %}
-~                  

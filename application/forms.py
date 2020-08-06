@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, PasswordField, BooleanField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, BooleanField, TextAreaField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import User
 from flask_login import current_user
@@ -88,3 +88,31 @@ class UpdateAccountForm(FlaskForm):
             user = Users.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Email already in use')
+
+class OrdersForm(FlaskForm):
+
+    status = StringField('Order Status:',
+    validators=[
+            Length(min=2, max=50)
+            ]
+    )
+
+    customer_name = StringField('Customer Name:',
+    validators=[
+            DataRequired(),
+            Length(min=2, max=60)
+            ]
+    )
+
+    customer_address = TextAreaField('Customer Address:',
+    validators=[
+            DataRequired(),
+            Length(max=500)
+            ]
+    )
+
+    price = FloatField('Order Amount:',
+    validators=[
+            DataRequired(),
+            ]
+    )

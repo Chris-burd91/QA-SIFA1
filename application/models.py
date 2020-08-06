@@ -26,9 +26,8 @@ def load_user(id):
 
 
 order_stock = db.Table('order_stock',
-     db.Column('order_id', db.Integer, db.ForeignKey('orders.order_id')),
-     db.Column('stock_id',db.Integer, db.ForeignKey('stock.stock_id')),
-     db.PrimaryKeyConstraint('order_id', 'stock_id')
+     db.Column('order_id', db.Integer, db.ForeignKey('orders.order_id'), primary_key=True),
+     db.Column('stock_id',db.Integer, db.ForeignKey('stock.stock_id'), primary_key=True)
 )
 
      
@@ -39,7 +38,7 @@ class Orders(db.Model):
     customer_name = db.Column(db.String(50), nullable=False)
     customer_address = db.Column(db.String(140),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    
+    stock = db.relationship('Stock', secondary=order_stock, lazy='subquery',backref=db.backref('orders',lazy=True)) 
  
     def __repr__(self):
        return ''.join([
