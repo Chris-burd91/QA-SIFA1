@@ -54,7 +54,7 @@ class Stock(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float(10), nullable=False)
     sell_price = db.Column(db.Float(10), nullable=False)
-  
+    orders = db.relationship('Orders', secondary=order_stock, lazy='subquery',backref=db.backref('stock',lazy=True)) 
     def __repr__(self):
         return ''.join([
             'Stock ID: ', str(self.id), '\r\n',

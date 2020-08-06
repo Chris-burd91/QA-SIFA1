@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, PasswordField, BooleanField, TextAreaField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from application.models import User
+from application.models import User, Orders
 from flask_login import current_user
 
 class RegistrationForm(FlaskForm):
@@ -91,7 +91,7 @@ class UpdateAccountForm(FlaskForm):
 
 class OrdersForm(FlaskForm):
 
-    status = StringField('Order Status:',
+    order_status = StringField('Order Status:',
     validators=[
             Length(min=2, max=50)
             ]
@@ -110,8 +110,7 @@ class OrdersForm(FlaskForm):
             Length(max=500)
             ]
     )
-
-    price = FloatField('Order Amount:',
+    date_order = DateTimeField('Date of Order: ')
     validators=[
             DataRequired(),
             ]
