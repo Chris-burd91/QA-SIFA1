@@ -37,5 +37,5 @@ def add_edit_stock():
 
 @app.route("/logout")
 def logout():
-    logout_user()
+
     return redirect(url_for('login'))
