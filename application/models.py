@@ -10,7 +10,6 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    orders = db.relationship('Orders', backref='user', lazy=True)
    
     def __repr__(self):
         return ''.join([
@@ -33,12 +32,11 @@ order_stock = db.Table('order_stock',
      
 class Orders(db.Model):
     order_id = db.Column(db.Integer, primary_key=True)
-    date_order = db.Column(db.Integer, nullable=False, default=datetime.utcnow)
+    order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     order_status = db.Column(db.String(40), default='Pending')
     customer_name = db.Column(db.String(50), nullable=False)
     customer_address = db.Column(db.String(140),nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    stock = db.relationship('Stock', secondary=order_stock, lazy='subquery',backref=db.backref('orders',lazy=True)) 
+    stock = db.relationship('Stock', secondary=order_stock, lazy='subquery',backref='item') 
  
     def __repr__(self):
        return ''.join([
@@ -54,7 +52,7 @@ class Stock(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float(10), nullable=False)
     sell_price = db.Column(db.Float(10), nullable=False)
-    orders = db.relationship('Orders', secondary=order_stock, lazy='subquery',backref=db.backref('stock',lazy=True)) 
+    
     def __repr__(self):
         return ''.join([
             'Stock ID: ', str(self.id), '\r\n',

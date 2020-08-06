@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, PasswordField, BooleanField, TextAreaField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.fields.html5 import DateField
 from application.models import User, Orders
 from flask_login import current_user
 
@@ -110,8 +111,9 @@ class OrdersForm(FlaskForm):
             Length(max=500)
             ]
     )
-    date_order = DateTimeField('Date of Order: ')
+    order_date = DateField('Date of Order: ',format='%Y-%m-%d',
     validators=[
             DataRequired(),
             ]
     )
+    submit = SubmitField('Send Order')
