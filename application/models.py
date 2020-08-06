@@ -23,13 +23,6 @@ class Users(db.Model, UserMixin):
 def load_user(id):
     return Users.query.get(int(id))
 
-order_stock = db.Table('order_stock',
-     db.Column('order_id', db.Integer, db.ForeignKey('orders.order_id')),
-     db.Column('stock_id',db.Integer, db.ForeignKey('stock.stock_id')),
-     db.PrimaryKeyConstraint('order_id', 'stock_id')
-)
-
-
      
 class Orders(db.Model):
     order_id = db.Column(db.Integer, primary_key=True)
@@ -45,9 +38,17 @@ class Orders(db.Model):
            'Order Status: ', self.order_status, '\r\n'
        ])
 
+order_stock = db.Table('order_stock',
+     db.Column('order_id', db.Integer, db.ForeignKey('orders.order_id')),
+     db.Column('stock_id',db.Integer, db.ForeignKey('stock.stock_id')),
+     db.PrimaryKeyConstraint('order_id', 'stock_id')
+)
+
+
+
 
 class Stock(db.Model):
-    product_id = db.Column(db.Integer, primary_key=True)
+    stock_id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(50), nullable=False)
     product_discription = db.Column(db.String(500))
     quantity = db.Column(db.Integer, nullable=False)
@@ -56,7 +57,7 @@ class Stock(db.Model):
   
     def __repr__(self):
         return ''.join([
-            'Product ID: ', str(self.id), '\r\n',
+            'Stock ID: ', str(self.id), '\r\n',
             'Product Info: ', self.product_name, '\r\n', self.product_discription, '\r\n',
             'Quantity: ',str(self.quantity), '\r\n',
             'Prices: ', 'Bought: ',str(self.price), '\r\n', 'Sold: ',str(self.sell_price), '\r\n',
