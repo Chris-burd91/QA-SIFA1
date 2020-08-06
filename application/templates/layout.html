@@ -6,14 +6,17 @@
 <strong><nav>
 <ul class="menu">
 <a href="{{ url_for('home') }}">Home</a>
-<a href="{{ url_for('register') }}">Register</a>
+{% if current_user.is_authenticated == True %}
 	<a href="{{ url_for('logout') }}">Logout</a>
 	<a href="{{ url_for('account') }}">Account</a>
-	<a href="{{ url_for('login') }}">Login</a>
 	<a href="{{ url_for('orders') }}">Orders</a>
 	<a href="{{ url_for('add_edit_orders') }}">Add/Edit Orders</a>
 	<a href="{{ url_for('stock') }}">Stock List</a>
 	<a href="{{ url_for('add_edit_stock') }}">Add/Edit Stock</a>
+{% else %}
+	<a href="{{ url_for('register') }}">Register</a>
+	<a href="{{ url_for('login') }}">Login</a>
+	{% endif %}
 </ul>
 </nav></strong>
 <body>
