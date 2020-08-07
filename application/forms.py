@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, PasswordField, BooleanField, TextAreaField, FloatField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, BooleanField, TextAreaField, FloatField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.fields.html5 import DateField
 from application.models import User, Orders
 from flask_login import current_user
+
 
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name',
@@ -91,6 +92,13 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Email already in use')
 
 class OrdersForm(FlaskForm):
+
+    order_id = SelectField('Order ID:',
+    coerce=int,
+    validators = [
+            DataRequired()
+            ]
+    )
 
     order_status = StringField('Order Status:',
     validators=[
