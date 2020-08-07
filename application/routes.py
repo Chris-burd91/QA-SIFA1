@@ -103,14 +103,14 @@ def add_orders():
 @app.route('/edit_orders/<id>', methods=['GET','POST'])
 @login_required
 def edit_orders(id):
-    form = OrdersForm()
+    form = OrdersForm(id)
     order = Orders.query.filter_by(id=id).first()
     if form.validate_on_submit():
         order.customer_name = form.customer_name.data
         order.customer_address = form.customer_address.data
         order.order_status = form.order_status.data
         db.session.commit()
-        return redirect(url_for('orders'),id = id)
+        return redirect(url_for('orders',id = id))
     elif request.method == 'GET':
         form.customer_name.data = order.customer_name
         form.customer_address.data = order.customer_address
