@@ -85,6 +85,7 @@ def add_orders():
     form = OrdersForm()
     if form.validate_on_submit():
         orderData = Orders(
+                order_id = Orders.order_id.data,
                 order_status = form.order_status.data,
                 customer_name = form.customer_name.data,
                 customer_address = form.customer_address.data,
@@ -99,6 +100,23 @@ def add_orders():
         print(form.errors)
     return render_template('add_orders.html', title='Add Orders',form=form)
 
+@app.route('/edit_orders', methods=['GET','POST'])
+@login_required
+def add_orders():
+    form = OrdersForm()
+    if form.validate_on_submit():
+        Orders.customer_name = form.customer_name.data
+        Orders.customer_address = form.customer_address.data
+        Orders.order_status = form.order_status.data
+        Orders.order_date = form.order_date.data
+        db.seesion.commit()
+        return redirect(url_for('orders'))
+    elif request.method == 'GET':
+        form.customer_name.data = Orders.customer_name
+        form.customer_address.data = Orders.customer_address
+        form.order_status.data = Orders.order_status
+        form.order_date.data = Orders.order_date
+    return render_template('edit_orders.html', title='Edit Orders', form=form)
 @app.route('/stock')
 @login_required
 def stock():

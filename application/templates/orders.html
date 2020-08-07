@@ -3,9 +3,18 @@
 {% if orders %}
 	{% for order in orders %}
         	<div>
-	    	<span>Customer Details: <i>{{ order.customer_name }} {{ order.customer_address }}</i></span>
-		<span>Order time and status: <i>{{ order.order_date }}{{ order.order_status }}</i></span>
-        	</div>
+		<br>
+		<span>Order ID: <i>{{ order.order_id }}</i></span>
+		<br>
+		<span>Customer Name: <i>{{ order.customer_name }}</i></span>
+		<br>
+		<span>Customer Address: <i>{{ order.customer_address }}</i></span>
+		<br>
+		<span>Time of Order: <i>{{ order.order_date }}</i></span>
+		<br>
+		<span>Order Status: <i>{{ order.order_status }}</i></span>
+        	<br>
+		</div>
 	{% endfor %}
 {% else %}
 	<p>There are no orders<p>
