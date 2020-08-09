@@ -92,7 +92,13 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Email already in use')
 
 class OrdersForm(FlaskForm):
-
+    
+    product_name = StringField('Product:',
+    validators=[
+            Length(min=2, max=50)
+            ]
+    )
+    
 
     order_status = StringField('Order Status:',
     validators=[
@@ -118,9 +124,17 @@ class OrdersForm(FlaskForm):
             DataRequired(),
             ]
     )
+
     submit = SubmitField('Send Order')
 
 class UpdateOrdersForm(FlaskForm):
+
+    product_name = StringField('Product:',
+    validators=[
+            Length(min=2,max=50),
+            DataRequired()
+            ]
+    )
     
     order_status = StringField('Order Status:',
     validators=[

@@ -77,7 +77,8 @@ def logout():
 @login_required
 def orders():
     orderData = Orders.query.all()
-    return render_template('orders.html', title='Orders', orders=orderData)
+    stockData = Stock.query.first()
+    return render_template('orders.html', title='Orders', orders=orderData, stock=stockData)
 
 @app.route('/add_orders', methods=['GET','POST'])
 @login_required
@@ -89,7 +90,8 @@ def add_orders():
                 order_status = form.order_status.data,
                 customer_name = form.customer_name.data,
                 customer_address = form.customer_address.data,
-                order_date = form.order_date.data
+                order_date = form.order_date.data,
+                product_name = form.product_name.data
                 )
 
         db.session.add(orderData)
@@ -109,9 +111,11 @@ def edit_orders(order_id):
         order.customer_name = form.customer_name.data
         order.customer_address = form.customer_address.data
         order.order_status = form.order_status.data
+        order.product_name = form.product_name.data
         db.session.commit()
         return redirect(url_for("orders", order_id=order_id))
     elif request.method == 'GET':
+        form.product_name.data = order.product_name
         form.customer_name.data = order.customer_name
         form.customer_address.data = order.customer_address
         form.order_status.data = order.order_status

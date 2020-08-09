@@ -4,6 +4,18 @@
     <div class='form'>
         <form method='POST' action=''>
             {{ form.hidden_tag() }}
+	     <div class="form-group">
+                 {{ form.product_name.label }}
+                 {{ form.product_name }}
+                 {% if form.product_name.errors %}
+                    <div class="error">
+                        {% for error in form.product_name.errors %}
+                            <span>{{ error }}</span>
+                         {% endfor %}
+                      </div>
+                 {% endif %}
+            </div>
+           <br>
 	    <div class="form-group">
    		 {{ form.customer_name.label }}
    		 {{ form.customer_name }}

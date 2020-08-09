@@ -23,10 +23,6 @@ class User(db.Model, UserMixin):
 def load_user(id):
     return User.query.get(int(id))
 
-#order_stock = db.Table('order_stock',
-#     db.Column('order_id', db.Integer, db.ForeignKey('orders.order_id'), primary_key=True),
-#     db.Column('stock_id',db.Integer, db.ForeignKey('stock.stock_id'), primary_key=True)
-#)
      
 class Orders(db.Model):
     order_id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +30,8 @@ class Orders(db.Model):
     order_status = db.Column(db.String(40), default='Pending')
     customer_name = db.Column(db.String(50), nullable=False)
     customer_address = db.Column(db.String(140),nullable=False)
-#    stock = db.relationship('Stock', secondary=order_stock, lazy='dynamic',backref='item')  
+    product_name = db.Column(db.String(50), nullable=False)
+    stock_id = db.Column('Stock',db.Integer,db.ForeignKey('stock.stock_id'))  
     def __repr__(self):
        return ''.join([
            'Order ID: ', str(self.id), '\r\n',
@@ -49,8 +46,6 @@ class Stock(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.String(50), nullable=False)
     sell_price = db.Column(db.String(50), nullable=False)
-   # order_id = (db.Integer, db.ForeignKey('Orders.order_id'))
-    
     def __repr__(self):
         return ''.join([
             'Stock ID: ', str(self.id), '\r\n',
