@@ -42,19 +42,19 @@ class Orders(db.Model):
            'Order Status: ', self.order_status, '\r\n'
        ])
 
-#class Stock(db.Model):
-#    stock_id = db.Column(db.Integer, primary_key=True)
-#    product_name = db.Column(db.String(50), nullable=False)
-#    product_discription = db.Column(db.String(500))
-#    quantity = db.Column(db.Integer, nullable=False)
-#    price = db.Column(db.Float(10), nullable=False)
-#    sell_price = db.Column(db.Float(10), nullable=False)
-#    order_id = (db.Integer, db.ForeignKey('Orders.order_id'))
+class Stock(db.Model):
+    stock_id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(50), nullable=False)
+    product_discription = db.Column(db.String(500))
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.String(50), nullable=False)
+    sell_price = db.Column(db.String(50), nullable=False)
+   # order_id = (db.Integer, db.ForeignKey('Orders.order_id'))
     
-#    def __repr__(self):
-#        return ''.join([
-#            'Stock ID: ', str(self.id), '\r\n',
-#            'Product Info: ', self.product_name, '\r\n', self.product_discription, '\r\n',
-#            'Quantity: ',str(self.quantity), '\r\n',
-#            'Prices: ', 'Bought: ',str(self.price), '\r\n', 'Sold: ',str(self.sell_price), '\r\n',
-#        ])       
+    def __repr__(self):
+        return ''.join([
+            'Stock ID: ', str(self.id), '\r\n',
+            'Product Info: ', self.product_name, '\r\n', self.product_discription, '\r\n',
+            'Quantity: ',str(self.quantity), '\r\n',
+            'Prices: ', 'Bought: ',str(self.price), '\r\n', 'Sold: ',str(self.sell_price), '\r\n',
+        ])       

@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, request, flash
 
 from application import app, db, bcrypt
-from application.models import User, Orders
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrdersForm, UpdateOrdersForm
+from application.models import User, Orders, Stock
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrdersForm, UpdateOrdersForm, StockForm, UpdateStockForm
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
@@ -125,15 +125,63 @@ def delete_order(order_id):
         db.session.delete(order)
         db.session.commit()
         return redirect(url_for("add_orders"))
+
 @app.route('/stock')
 @login_required
 def stock():
-    return render_template('stock.html', title='Stock')
+    stockData = Stock.query.all()
+    return render_template('stock.html', title='Stock', stock=stockData)
 
-@app.route('/add_edit_stock')
+@app.route('/add_stock', methods=['GET','POST'])
 @login_required
-def add_edit_stock():
-    return render_template('add_stock.html', title='Add/Edit Stock')
+def add_stock():
+    form = StockForm()
+    if form.validate_on_submit():
+        stockData = Stock(
+                stock_id = Stock.stock_id,
+                product_name = form.product_name.data,
+                product_discription = form.product_discription.data,
+                quantity = form.quantity.data,
+                price = form.price.data,
+                sell_price = form.sell_price.data
+                )
+        db.session.add(stockData)
+        db.session.commit()
+        return redirect(url_for("stock"))
+    else:
+        print(form.errors)
+    return render_template('add_stock.html', title='Add Stock', form=form)
+
+@app.route("/edit_stock/<stock_id>", methods=['GET','POST'])
+@login_required
+def edit_stock(stock_id):
+    stock = Stock.query.filter_by(stock_id=stock_id).first()
+    form = UpdateStockForm()
+    if form.validate_on_submit():
+        stock.product_name = form.product_name.data
+        stock.product_discription = form.product_discription.data
+        stock.quantity = form.quantity.data
+        stock.price = form.price.data
+        stock.sell_price = form.sell_price.data
+        db.session.commit()
+        return redirect(url_for("stock", stock_id=stock_id))
+    elif request.method == 'GET':
+        form.product_name.data = stock.product_name
+        form.product_discription.data = stock.product_discription
+        form.quantity.data = stock.quantity
+        form.price.data = stock.price
+        form.sell_price.data = stock.sell_price
+    return render_template('edit_stock.html', title='Edit Stock', form=form)
+
+@app.route("/delete_stock/<stock_id>")
+@login_required
+def delete_stock(stock_id):
+    if current_user.is_authenticated:
+        stock = Stock.query.filter_by(stock_id=stock_id).first()
+
+        db.session.delete(stock)
+        db.session.commit()
+        return redirect(url_for("add_stock"))
 
 @app.route("/account/delete", methods=["GET", "POST"])
 @login_required

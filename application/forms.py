@@ -142,31 +142,57 @@ class UpdateOrdersForm(FlaskForm):
     submit = SubmitField('Update Order')
 
 
-#class StockForm(FlaskForm):
+class StockForm(FlaskForm):
 
-#    product_name = StringField('Proctuct Name:',
-#        validators=[
-#            DataRequired(),
-#            Length(min=2, max=60)
-#            ]
-#        )
-#    product_discription = TextAreaField('Product Discription:', validators=[Length(min=0, max=500)])
+    product_name = StringField('Proctuct Name:',
+        validators=[
+            DataRequired(),
+            Length(min=2, max=60)
+            ]
+        )
+    product_discription = TextAreaField('Product Discription:', validators=[Length(min=0, max=500)])
 
-#    quantity = IntegerField('Quantity:', 
-#        validators=[
-#            DataRequired(),
-#            Length(min=0, max=4)
-#            ]
-#        )
-#    price = FloatField('Bought Price:', 
-#        validators=[
-#            DataRequired(),
-#            Length(min=0, max=10)
-#            ]
-#        )
-#    sell_price = FloatField('Sold Price:',
-#        validators=[
-#            DataRequired(),
-#            Length(min=0, max=10)
-#            ]
-#        )
+    quantity = StringField('Quantity:', 
+        validators=[
+            DataRequired(),
+            ]
+        )
+    price = StringField('Bought Price:', 
+        validators=[
+            DataRequired(),
+            ]
+        )
+    sell_price = StringField('Sold Price:',
+        validators=[
+            DataRequired()
+            ]
+        )
+    submit = SubmitField('Add Stock')
+
+
+class UpdateStockForm(FlaskForm):
+
+    product_name = StringField('Proctuct Name:',
+        validators=[
+            DataRequired(),
+            Length(min=2, max=60)
+            ]
+        )
+    product_discription = TextAreaField('Product Discription:', validators=[Length(min=0, max=500)])
+
+    quantity = StringField('Quantity:', 
+        validators=[
+            DataRequired()
+            ]
+        )
+    price = StringField('Bought Price:', 
+        validators=[
+            DataRequired(),
+            ]
+        )
+    sell_price = StringField('Sold Price:',
+        validators=[
+            DataRequired(),
+            ]
+        )
+    submit = SubmitField('Update Stock')             
