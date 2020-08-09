@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, flash
 
 from application import app, db, bcrypt
 from application.models import User, Orders
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrdersForm
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrdersForm, UpdateOrdersForm
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
@@ -100,17 +100,17 @@ def add_orders():
         print(form.errors)
     return render_template('add_orders.html', title='Add Orders',form=form)
 
-@app.route('/edit_orders/<id>', methods=['GET','POST'])
+@app.route('/edit_orders/<order_id>', methods=['GET','POST'])
 @login_required
-def edit_orders(id):
-    form = OrdersForm(id)
-    order = Orders.query.filter_by(id=id).first()
+def edit_orders(order_id):
+    form = UpdateOrdersForm()
+    order = Orders.query.filter_by(order_id=order_id).first()
     if form.validate_on_submit():
         order.customer_name = form.customer_name.data
         order.customer_address = form.customer_address.data
         order.order_status = form.order_status.data
         db.session.commit()
-        return redirect(url_for('orders',id = id))
+        return redirect(url_for('orders',order_id=order_id))
     elif request.method == 'GET':
         form.customer_name.data = order.customer_name
         form.customer_address.data = order.customer_address

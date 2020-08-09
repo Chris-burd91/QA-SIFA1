@@ -126,6 +126,33 @@ class OrdersForm(FlaskForm):
     )
     submit = SubmitField('Send Order')
 
+class UpdateOrdersForm(FlaskForm):
+    
+    order_status = StringField('Order Status:',
+    validators=[
+            Length(min=2, max=50)
+            ]
+    )
+    customer_name = StringField('Customer Name:',
+    validators=[
+            DataRequired(),
+            Length(min=2, max=60)
+            ]
+    )
+    customer_address = TextAreaField('Customer Address:',
+    validators=[
+            DataRequired(),
+            Length(max=500)
+            ]
+    )
+    order_date = DateField('Date of Order: ',format='%Y-%m-%d',
+    validators=[
+            DataRequired(),
+            ]
+    )
+    submit = SubmitField('Send Order')
+
+
 #class StockForm(FlaskForm):
 
 #    product_name = StringField('Proctuct Name:',
