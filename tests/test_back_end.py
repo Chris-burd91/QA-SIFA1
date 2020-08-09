@@ -55,6 +55,11 @@ class TestViews(TestBase):
         response = self.client.get(url_for('orders'))
         self.assertIn(b"Orders Page", response.data)
 
+    def test_add_orders_view(self):
+        self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
+        response = self.client.get(url_for('orders'))
+        self.assertIn(b"Orders Page", response.data)
+
     def test_stock_view(self):
         self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
         response = self.client.get(url_for('stock'))
@@ -63,8 +68,12 @@ class TestViews(TestBase):
     def test_add_stock_view(self):
         self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
         responce = self.client.get(url_for('add_stock'))
-        self.assertIn(b"Add New Stock here:", responce.data)
-
+        self.assertIn(b"Stock Page", responce.data)
+    
+    def test_account_view(self):
+        self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
+        responce = self.client.get(url_for('account'))
+        self.assertIn(b"Account Page", responce.data)
     def test_register_view(self):
 
         response = self.client.get(url_for('register'))
@@ -91,7 +100,43 @@ class TestOrders(TestBase):
                ),
                follow_redirects=True
           )
-          self.assertIn(b'Add an incoming order here', response.data)
+          self.assertIn(b'Orders Page', response.data)
+class TestStock(TestBase):
+
+    def test_add_new_stock(self):
+
+        with self.client:
+          self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
+          response = self.client.post(
+               '/add_stock',
+               data=dict(               
+                  product_name ="Test Content",
+                  product_discription = "Test content",
+                  quantity = "55",
+                  price = "22",
+                  sell_price = "22"
+               ),
+               follow_redirects=True
+          )
+          self.assertIn(b'Stock Page', response.data)
+class TestEditOrders(TestBase):
+
+    def test_edit_order(self):
+
+        with self.client:
+          self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
+          response = self.client.post(
+               '/edit_orders',
+               data=dict(
+                  product_name = "Test name",
+                  customer_name = "TestName",
+                  custome_address = "",
+                  order_status = "Test Status"
+               ),
+               follow_redirects=True
+          )
+          
+          self.assertRedirects(b"Orders Page", response.data)
 
 class TestRegister(TestBase):
 
@@ -103,14 +148,29 @@ class TestRegister(TestBase):
                   '/register',
                   data=dict(
                       first_name="TestName",
-                      last_name="TestName",
-                      email = "admin@admin.com",
+                      last_name="TestLastName",
+                      email = "admin@blog.com",
                       password="admin2016",
                       confirm_password ="admin2016"
                   ),
                   follow_redirects=True
               )
-          self.assertIn(b"Home Page", responce.data)
+          self.assertRedirects(b"Home Page", response.data)
+
+class TestUpdateAccount(TestBase):
+    def test_account_update(self):
+        with self.client:
+            self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
+            response = self.client.post(
+                    url_for('account'), data = dict(
+                        first_name="TestName2",
+                        last_name="Testlastname2",
+                        email = "admin2@blog.com"
+                    ),
+                    follow_redirects=True
+                )
+            self.assertRedirects(b"Edit Account Here", response.data)
+                    
 
 class TestLogin(TestBase):
     def test_login(self):
@@ -126,3 +186,28 @@ class TestLogin(TestBase):
                 )
             self.assertEqual(current_user.email, "admin@admin.com")
 
+class TestLogout(TestBase):
+    def test_account_delete(self):
+        with self.client:
+            self.client.post(url_for('login'), data=dict( email='admin@admin.com', password='admin2016'), follow_redirects=True)
+            response = self.client.post(
+                 'account/delete',
+                 follow_redirects=True
+                 )
+            self.assertIn(b'Register Page',response.data)
+
+class TestDeleteOrder(TestBase):
+
+    def test_delete_order(self):
+        with self.client:
+            response = self.client.post(
+                    'delete_order', follow_redirects=True)
+            self.assertEqual(response.status_code,404)
+
+class TestDeleteStock(TestBase):
+
+    def test_delete_stock(self):
+        with self.client:
+            response = self.client.post(
+                    'delete_stock', follow_redirects=True)
+            self.assertEqual(response.status_code,404)
