@@ -93,12 +93,6 @@ class UpdateAccountForm(FlaskForm):
 
 class OrdersForm(FlaskForm):
 
-    order_id = SelectField('Order ID:',
-    coerce=int,
-    validators = [
-            DataRequired()
-            ]
-    )
 
     order_status = StringField('Order Status:',
     validators=[
@@ -145,12 +139,7 @@ class UpdateOrdersForm(FlaskForm):
             Length(max=500)
             ]
     )
-    order_date = DateField('Date of Order: ',format='%Y-%m-%d',
-    validators=[
-            DataRequired(),
-            ]
-    )
-    submit = SubmitField('Send Order')
+    submit = SubmitField('Update Order')
 
 
 #class StockForm(FlaskForm):

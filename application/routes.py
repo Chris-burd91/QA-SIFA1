@@ -85,7 +85,7 @@ def add_orders():
     form = OrdersForm()
     if form.validate_on_submit():
         orderData = Orders(
-                order_id = Orders.id.data,
+                order_id = Orders.order_id,
                 order_status = form.order_status.data,
                 customer_name = form.customer_name.data,
                 customer_address = form.customer_address.data,
@@ -100,17 +100,17 @@ def add_orders():
         print(form.errors)
     return render_template('add_orders.html', title='Add Orders',form=form)
 
-@app.route('/edit_orders/<order_id>', methods=['GET','POST'])
+@app.route("/edit_orders/<order_id>", methods=['GET','POST'])
 @login_required
 def edit_orders(order_id):
+    order = Orders.query.filter_by(order_id = order_id).first()
     form = UpdateOrdersForm()
-    order = Orders.query.filter_by(order_id=order_id).first()
     if form.validate_on_submit():
         order.customer_name = form.customer_name.data
         order.customer_address = form.customer_address.data
         order.order_status = form.order_status.data
         db.session.commit()
-        return redirect(url_for('orders',order_id=order_id))
+        return redirect(url_for("orders", order_id=order_id))
     elif request.method == 'GET':
         form.customer_name.data = order.customer_name
         form.customer_address.data = order.customer_address
