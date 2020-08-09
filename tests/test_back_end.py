@@ -126,11 +126,11 @@ class TestEditOrders(TestBase):
         with self.client:
           self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
           response = self.client.post(
-               '/edit_orders',
+               '/edit_orders/1',
                data=dict(
                   product_name = "Test name",
                   customer_name = "TestName",
-                  custome_address = "",
+                  custome_address = "dsuihfe",
                   order_status = "Test Status"
                ),
                follow_redirects=True
