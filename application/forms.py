@@ -87,7 +87,7 @@ class UpdateAccountForm(FlaskForm):
 
     def validate_email(self,email):
         if email.data != current_user.email:
-            user = Users.query.filter_by(email=email.data).first()
+            user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Email already in use')
 
