@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body_content %}
+    <p>Add an incoming order here:</p>
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+	     <div class="form-group">
+                 {{ form.product_name.label }}
+                 {{ form.product_name }}
+                 {% if form.product_name.errors %}
+                    <div class="error">
+                        {% for error in form.product_name.errors %}
+                            <span>{{ error }}</span>
+                         {% endfor %}
+                      </div>
+                 {% endif %}
+            </div>
+           <br>
+	    <div class="form-group">
+   		 {{ form.customer_name.label }}
+   		 {{ form.customer_name }}
+   		 {% if form.customer_name.errors %}
+   		    <div class="error">
+        		{% for error in form.customer_name.errors %}
+           		    <span>{{ error }}</span>
+       			 {% endfor %}
+   		      </div>
+   		 {% endif %}
+	    </div>
+	   <br>
+	    <div class="form-group">
+   		 {{ form.customer_address.label }}
+  	         {{ form.customer_address }}
+   		 {% if form.customer_address.errors %}
+   		     <div class="error">
+      			  {% for error in form.customer_address.errors %}
+           		      <span>{{ error }}</span>
+        		  {% endfor %}
+  		      </div>
+   		 {% endif %}
+	    </div>
+	    <br>
+	     <div class="form-group">
+                 {{ form.order_date.label }}
+                 {{ form.order_date }}
+                 {% if form.order_date.errors %}
+                     <div class="error">
+                          {% for error in form.order_date.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                 {% endif %}
+            </div>
+	    <br>
+            <div class='form_group'>
+                {{ form.order_status.label }}
+                {{ form.order_status}}
+                {% if form.order_status.errors %}
+                    <div class='error'>
+                        {% for error in form.order_status.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+	    <br>
+	    <div class='form_group'>
+                {{ form.submit }}
+        </form>
+    </div>
+{% endblock %}

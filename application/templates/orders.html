@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body_content %}
+{% if orders %}
+	{% for order in orders %}
+        	<div>
+		<br>
+		<span>Order ID: <i>{{ order.order_id }}</i></span>
+		<br>
+		<span>Product: <i>{{order.product_name }}</i></span>
+		<br>
+		<span>Customer Name: <i>{{ order.customer_name }}</i></span>
+		<br>
+		<span>Customer Address: <i>{{ order.customer_address }}</i></span>
+		<br>
+		<span>Time of Order: <i>{{ order.order_date }}</i></span>
+		<br>
+		<span>Order Status: <i>{{ order.order_status }}</i></span>
+		<br>
+		<a href="{{ url_for('edit_orders', order_id=order.order_id) }}">Edit Order</a>
+		<br>
+		<a href="{{ url_for('delete_order', order_id=order.order_id) }}">Delete Order</a>
+		</div>
+		<div>
+	{% endfor %}
+{% else %}
+	<p>There are no orders<p>
+{% endif %}
+{% endblock %}
+~                  

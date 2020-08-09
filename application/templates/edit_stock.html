@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body_content %}
+    <p>Add New Stock here:</p>
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+	    <div class="form-group">
+   		 {{ form.product_name.label }}
+   		 {{ form.product_name }}
+   		 {% if form.product_name.errors %}
+   		    <div class="error">
+        		{% for error in form.product_name.errors %}
+           		    <span>{{ error }}</span>
+       			 {% endfor %}
+   		      </div>
+   		 {% endif %}
+	    </div>
+	   <br>
+	    <div class="form-group">
+   		 {{ form.product_discription.label }}
+  	         {{ form.product_discription }}
+   		 {% if form.product_discription.errors %}
+   		     <div class="error">
+      			  {% for error in form.product_discription.errors %}
+           		      <span>{{ error }}</span>
+        		  {% endfor %}
+  		      </div>
+   		 {% endif %}
+	    </div>
+	    <br>
+	     <div class="form-group">
+                 {{ form.quantity.label }}
+                 {{ form.quantity }}
+                 {% if form.quantity.errors %}
+                     <div class="error">
+                          {% for error in form.quantity.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                 {% endif %}
+            </div>
+	    <br>
+            <div class='form_group'>
+                {{ form.price.label }}
+                {{ form.price}}
+                {% if form.price.errors %}
+                    <div class='error'>
+                        {% for error in form.price.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+	    <br>
+            <div class='form_group'>
+                {{ form.sell_price.label }}
+                {{ form.sell_price}}
+                {% if form.sell_price.errors %}
+                    <div class='error'>
+                        {% for error in form.sell_price.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+	    <br>
+	    <div class='form_group'>
+                {{ form.submit }}
+        </form>
+    </div>
+{% endblock %}

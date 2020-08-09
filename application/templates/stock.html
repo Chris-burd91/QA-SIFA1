@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body_content %}
+{% if stock %}
+        {% for stock in stock %}
+                <div>
+	  	 <span>Stock ID: <i>{{ stock.stock_id }}<i/></span>
+		 <br>
+		 <span>Product Info: <i>{{ stock.product_name }}</i></span>
+		 <br>
+		 <span>Product Discription: <i>{{ stock.product_discription }}</i></span>
+		 <br>
+		 <span>Quantity: <i>{{ (stock.quantity) }}</i></span>
+		 <br>
+		 <span>Bought Price: £<i>{{ (stock.price) }}</i></span>
+		 <br>
+		 <span>Sold Price: £<i>{{ (stock.sell_price) }}</i></span>
+                <br>
+		<a href="{{ url_for('edit_stock', stock_id=stock.stock_id) }}">Edit Stock</a>
+                <br>
+                <a href="{{ url_for('delete_stock', stock_id=stock.stock_id) }}">Delete Stock</a>
+		<br>
+		<br>
+		</div>
+
+        {% endfor %}
+{% else %}
+        <p>There is no Stock<p>
+{% endif %}
+{% endblock %}
