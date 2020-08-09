@@ -25,10 +25,10 @@ class TestBase(TestCase):
         db.create_all()
 
         hashed_pw = bcrypt.generate_password_hash('admin2016')
-        admin = Users(first_name="admin", last_name="admin", email="admin@admin.com", password=hashed_pw)
+        admin = User(first_name="admin", last_name="admin", email="admin@admin.com", password=hashed_pw)
 
         hashed_pw_2 = bcrypt.generate_password_hash('test2016')
-        employee = Users(first_name="test", last_name="user", email="test@user.com", password=hashed_pw_2)
+        employee = User(first_name="test", last_name="user", email="test@user.com", password=hashed_pw_2)
 
         db.session.add(admin)
         db.session.add(employee)
@@ -58,7 +58,12 @@ class TestViews(TestBase):
     def test_stock_view(self):
         self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
         response = self.client.get(url_for('stock'))
-        self.assertEqual(b"Stock Page", response.data)
+        self.assertIn(b"Stock Page", response.data)
+
+    def test_add_stock_view(self):
+        self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
+        responce = self.client.get(url_for('add_stock'))
+        self.assertIn(b"Add New Stock here:", responce.data)
 
     def test_register_view(self):
 
@@ -77,18 +82,16 @@ class TestOrders(TestBase):
         with self.client:
           self.client.post(url_for('login'),data=dict(email="admin@admin.com",password="admin2016"),follow_redirects=True)
           response = self.client.post(
-             url_for('/add_orders'),
+               '/add_orders',
                data=dict(
                   product_name = "Test name",
                   customer_name ="Test Content",
                   custome_address = "Test content",
-                  order_date = "11/11/2020",
                   order_status = "test content"
                ),
                follow_redirects=True
           )
-          self.assertIn(b'Test add Order', response.data)
-          self.assertEqual(response.status_code, 200)
+          self.assertIn(b'Add an incoming order here', response.data)
 
 class TestRegister(TestBase):
 
@@ -107,7 +110,7 @@ class TestRegister(TestBase):
                   ),
                   follow_redirects=True
               )
-          self.assertIn(response.data)
+          self.assertIn(b"Home Page", responce.data)
 
 class TestLogin(TestBase):
     def test_login(self):
