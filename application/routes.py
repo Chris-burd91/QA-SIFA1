@@ -103,7 +103,7 @@ def add_orders():
 @app.route("/edit_orders/<order_id>", methods=['GET','POST'])
 @login_required
 def edit_orders(order_id):
-    order = Orders.query.filter_by(order_id = order_id).first()
+    order = Orders.query.filter_by(order_id=order_id).first()
     form = UpdateOrdersForm()
     if form.validate_on_submit():
         order.customer_name = form.customer_name.data
@@ -116,6 +116,15 @@ def edit_orders(order_id):
         form.customer_address.data = order.customer_address
         form.order_status.data = order.order_status
     return render_template('edit_orders.html', title='Edit Orders', form=form)
+
+@app.route("/delete_order/<order_id>")
+@login_required
+def delete_order(order_id):
+    if current_user.is_authenticated:
+        order = Orders.query.filter_by(order_id=order_id).first()
+        db.session.delete(order)
+        db.session.commit()
+        return redirect(url_for("add_orders"))
 @app.route('/stock')
 @login_required
 def stock():
