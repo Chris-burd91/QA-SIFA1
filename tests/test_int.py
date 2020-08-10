@@ -27,7 +27,7 @@ class TestBase(LiveServerTestCase):
         chrome_options = Options()
         chrome_options.binary_location = "/usr/bin/chromium-browser"
         chrome_options.add_argument("--headless")
-        self.driver = webdriver.Chrome(executable_path="/home/chrisburd91/chromedriver", chrome_options=chrome_options)
+        self.driver = webdriver.Chrome(executable_path="/home/chrisburd91/QA-SIFA1/chromedriver", chrome_options=chrome_options)
         self.driver.get("http://localhost:5000")
         db.session.commit()
         db.drop_all()
@@ -114,11 +114,9 @@ class TestAddOrder(TestBase):
         self.driver.find_element_by_xpath('//*[@id="product_name"]').send_keys("Test Product")
         self.driver.find_element_by_xpath('//*[@id="customer_name"]').send_keys("Test_Name")
         self.driver.find_element_by_xpath('//*[@id="customer_address"]').send_keys("Test Address")
-<<<<<<< HEAD
         self.driver.find_element_by_xpath('//*[@id="order_date"]').send_keys("2020-04-032020-04-03")
-=======
         self.driver.find_element_by_xpath('//*[@id="order_date"]').send_keys("2020-03-03")
->>>>>>> testing
+        self.driver.find_element_by_xpath('//*[@id="order_date"]').send_keys("2020-03-03")
         self.driver.find_element_by_xpath('//*[@id="order_status"]').send_keys("Test_Status")
         self.driver.find_element_by_xpath('//*[@id="submit"]').click()
         time.sleep(5) 
