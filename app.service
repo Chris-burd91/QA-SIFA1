@@ -5,7 +5,7 @@ Description=Flask App
 User=flask-app
 WorkingDirectory=/opt/app
 EnvironmentFile=/opt/app/flask.env
-ExecStart=/bin/sh -c 'cd /opt/app && \
+ExecStart='cd /opt/app && \
 	. ./venv/bin/activate && \ 
 	gunicorn --workers=4 --bind=0.0.0.0:5000 app:app'
 
