@@ -3,7 +3,7 @@ Inventory Warehouse System
 
 ### Links:
 Agile Board : https://qaproject12.atlassian.net/jira/software/projects/FPK/boards/3/roadmap
-Gighub : https://github.com/Chris-burd91/QA-SIFA1
+Github : https://github.com/Chris-burd91/QA-SIFA1
 
 ### Introduction:
 
