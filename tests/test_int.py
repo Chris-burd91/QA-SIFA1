@@ -114,12 +114,12 @@ class TestAddOrder(TestBase):
         self.driver.find_element_by_xpath('//*[@id="product_name"]').send_keys("Test Product")
         self.driver.find_element_by_xpath('//*[@id="customer_name"]').send_keys("Test_Name")
         self.driver.find_element_by_xpath('//*[@id="customer_address"]').send_keys("Test Address")
-        self.driver.find_element_by_xpath('//*[@id="order_date"]').send_keys("22/22/2022")
+        self.driver.find_element_by_xpath('//*[@id="order_date"]').send_keys("2020-03-03")
         self.driver.find_element_by_xpath('//*[@id="order_status"]').send_keys("Test_Status")
         self.driver.find_element_by_xpath('//*[@id="submit"]').click()
         time.sleep(5) 
         
-        assert url_for('orders') in self.driver.current_url
+        assert url_for('add_orders') in self.driver.current_url
 
 class TestAddStock(TestBase):
 
