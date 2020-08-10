@@ -8,7 +8,7 @@ Github : https://github.com/Chris-burd91/QA-SIFA1
 ### Introduction:
 
 This is a web app designed with QA for the purpose of managing stock items and orders.
-The Original purpose of this project was to be a full fledged website to sell products on the front-end and move stock orders around on the "back-end", I use quotes and the 2 portions of the website are basically 2 different functions in themselves and would be 2 different systems entirely. 
+The Original purpose of this project was to be a full fledged website to sell products on the front-end and move stock orders around on the "back-end", I use quotes as the 2 portions of the website are basically 2 different functions in themselves and would be 2 different systems entirely. 
 
 ### The WebApp Discription
 Now this has become a simple inventory system for a warehouse as to place orders from one user, to be viewed by many other users which can delete or edit the order when it needs to be updated with order status or changes to details, and when the order is complete it is to be deleted as to not waste space on the orders board. There is also the stock board which allows users to add stock to the list and update it when price changes occure or when items are no longer in stock to be removed by the user.
