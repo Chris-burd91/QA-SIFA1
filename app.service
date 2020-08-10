@@ -2,7 +2,7 @@
 Description=Flask App
 
 [Service]
-User=chrisburd91
+User=flask-app
 WorkingDirectory=/opt/app
 EnvironmentFile=/opt/app/flask.env
 ExecStart=/bin/sh -c 'cd /opt/app && \
